@@ -7,6 +7,7 @@ import (
     "strings"
     "io/ioutil"
     "crypto/md5"
+    "time"
 )
 
 type FileInfos []FileInfo
@@ -37,6 +38,7 @@ func (fis FileInfos) Diff(newest FileInfos) (changed FileInfos) {
 
 type FileInfo struct {
     FullPath string `json:"full_path"`
+    ModTime  string `json:"mod_time"`
     MD5      string `json:"md5"`
 }
 
@@ -74,6 +76,7 @@ func GetFileList(root string) (list FileInfos) {
         fi := FileInfo{
             FullPath: p,
             MD5:      md5Check,
+            ModTime:  info.ModTime().Format(time.RFC3339),
         }
         list = append(list, fi)
         //fmt.Println("name: ", name)
