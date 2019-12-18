@@ -12,7 +12,7 @@ import (
 )
 
 import (
-	"github.com/ihexxa/quickshare/server/libs/fileidx"
+	"github.com/ssor/quickshare/server/libs/fileidx"
 )
 
 var (

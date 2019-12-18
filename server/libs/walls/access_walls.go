@@ -8,9 +8,9 @@ import (
 )
 
 import (
-	"github.com/ihexxa/quickshare/server/libs/cfg"
-	"github.com/ihexxa/quickshare/server/libs/encrypt"
-	"github.com/ihexxa/quickshare/server/libs/limiter"
+	"github.com/ssor/quickshare/server/libs/cfg"
+	"github.com/ssor/quickshare/server/libs/encrypt"
+	"github.com/ssor/quickshare/server/libs/limiter"
 )
 
 type AccessWalls struct {

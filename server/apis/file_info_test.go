@@ -7,11 +7,11 @@ import (
 )
 
 import (
-	"github.com/ihexxa/quickshare/server/libs/cfg"
-	"github.com/ihexxa/quickshare/server/libs/errutil"
-	"github.com/ihexxa/quickshare/server/libs/fileidx"
-	"github.com/ihexxa/quickshare/server/libs/httputil"
-	"github.com/ihexxa/quickshare/server/libs/logutil"
+	"github.com/ssor/quickshare/server/libs/cfg"
+	"github.com/ssor/quickshare/server/libs/errutil"
+	"github.com/ssor/quickshare/server/libs/fileidx"
+	"github.com/ssor/quickshare/server/libs/httputil"
+	"github.com/ssor/quickshare/server/libs/logutil"
 )
 
 const mockShadowId = "shadowId"

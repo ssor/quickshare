@@ -7,7 +7,7 @@ import (
 )
 
 import (
-	"github.com/ihexxa/quickshare/server/libs/errutil"
+	"github.com/ssor/quickshare/server/libs/errutil"
 )
 
 type MsgRes struct {

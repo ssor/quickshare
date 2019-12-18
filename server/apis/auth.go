@@ -6,8 +6,8 @@ import (
 )
 
 import (
-	"github.com/ihexxa/quickshare/server/libs/httputil"
-	"github.com/ihexxa/quickshare/server/libs/httpworker"
+	"github.com/ssor/quickshare/server/libs/httputil"
+	"github.com/ssor/quickshare/server/libs/httpworker"
 )
 
 func (srv *SrvShare) LoginHandler(res http.ResponseWriter, req *http.Request) {

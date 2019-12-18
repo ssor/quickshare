@@ -5,11 +5,11 @@
   一个小而美的文件共享服务器
 </p>
 <p align="center">
-  <a href="https://travis-ci.org/ihexxa/quickshare">
-    <img src="https://travis-ci.org/ihexxa/quickshare.svg?branch=master" />
+  <a href="https://travis-ci.org/ssor/quickshare">
+    <img src="https://travis-ci.org/ssor/quickshare.svg?branch=master" />
   </a>
-  <a href="https://goreportcard.com/report/github.com/ihexxa/quickshare">
-    <img src="https://goreportcard.com/badge/github.com/ihexxa/quickshare" />
+  <a href="https://goreportcard.com/report/github.com/ssor/quickshare">
+    <img src="https://goreportcard.com/badge/github.com/ssor/quickshare" />
   </a>
   <a href="https://gitter.im/quickshare/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link">
     <img src="https://badges.gitter.im/Join%20Chat.svg" />
@@ -22,7 +22,7 @@
 
 ## 下载
 
-访问 [发布页](https://github.com/ihexxa/quickshare/releases) 获取 Linux | Mac | Windows 版本.
+访问 [发布页](https://github.com/ssor/quickshare/releases) 获取 Linux | Mac | Windows 版本.
 
 ## 特点
 
