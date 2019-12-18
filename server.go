@@ -4,6 +4,8 @@ import (
     "github.com/gin-gonic/gin"
     "os"
     "github.com/ssor/quickshare/file_tools"
+    "github.com/ssor/quickshare/server/libs/cfg"
+    "fmt"
 )
 
 const (
@@ -16,7 +18,13 @@ func main() {
     router := gin.Default()
     router.GET("/list", fileList)
     router.Static("/assets", assetsRoot)
-    router.Run("0.0.0.0:8888")
+
+    hostName, err := cfg.GetLocalAddr()
+    if err != nil {
+        panic(err)
+    }
+
+    router.Run(fmt.Sprintf("%s:8888", hostName.String()))
     //config := cfg.NewConfigFrom("config.json")
     //srvShare := apis.NewSrvShare(config)
     //
