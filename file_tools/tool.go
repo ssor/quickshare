@@ -8,6 +8,7 @@ import (
     "io/ioutil"
     "crypto/md5"
     "time"
+    "path"
 )
 
 type FileInfos []FileInfo
@@ -40,6 +41,7 @@ type FileInfo struct {
     FullPath string `json:"full_path"`
     ModTime  string `json:"mod_time"`
     MD5      string `json:"md5"`
+    Size     int64  `json:"size"`
 }
 
 func (fi FileInfo) SameWith(input FileInfo) bool {
@@ -47,10 +49,11 @@ func (fi FileInfo) SameWith(input FileInfo) bool {
 }
 
 func (fi FileInfo) String() string {
-    return fmt.Sprintf("path: %s md5: %s", fi.FullPath, fi.MD5)
+    return fmt.Sprintf("path: %s md5: %s size: %d mod: %s", fi.FullPath, fi.MD5, fi.Size, fi.ModTime)
 }
 
 func GetFileList(root string) (list FileInfos) {
+    fmt.Printf("get files from %s \n", root)
     filepath.Walk(root, func(p string, info os.FileInfo, err error) error {
         if p == root {
             return nil
@@ -74,13 +77,13 @@ func GetFileList(root string) (list FileInfos) {
         }
 
         fi := FileInfo{
-            FullPath: p,
+            FullPath: strings.Replace(p, path.Join(root, "/")+"/", "", 1),
             MD5:      md5Check,
             ModTime:  info.ModTime().Format(time.RFC3339),
+            Size:     info.Size(),
         }
         list = append(list, fi)
         //fmt.Println("name: ", name)
-        //fmt.Println("full path: ", p)
 
         return nil
     })

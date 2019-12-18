@@ -58,6 +58,9 @@ func startSyncFile(host string) error {
     //}
     localFiles := file_tools.GetFileList(assetsRoot)
     fmt.Printf("%d local files \n", len(localFiles))
+    for _, fi := range localFiles {
+        fmt.Println(fi)
+    }
 
     newestUpdated := localFiles.Diff(serverFiles)
 
@@ -77,18 +80,19 @@ func startSyncFile(host string) error {
 }
 
 func downloadFile(fi file_tools.FileInfo, host string) error {
-    if e := os.MkdirAll(filepath.Dir(fi.FullPath), os.ModePerm); e != nil {
+    fileDir := filepath.Join(assetsRoot, filepath.Dir(fi.FullPath))
+    if e := os.MkdirAll(fileDir, os.ModePerm); e != nil {
         return e
     }
-    url := host + "/" + fi.FullPath
-    //fmt.Println(url)
+    url := host + "/assets/" + fi.FullPath
+    fmt.Println(url)
+
     r, err := req.Get(url)
     if err != nil {
         return fmt.Errorf("url: %s err: %s", url, err)
     }
-    if e := r.ToFile(fi.FullPath); e != nil {
+    if e := r.ToFile(filepath.Join(fileDir, filepath.Base(fi.FullPath))); e != nil {
         return e
     }
-    //fmt.Println(filepath.Base(fi.FullPath))
     return nil
 }

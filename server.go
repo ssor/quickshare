@@ -6,25 +6,39 @@ import (
     "github.com/ssor/quickshare/file_tools"
     "github.com/ssor/quickshare/server/libs/cfg"
     "fmt"
+    "github.com/mkideal/cli"
 )
 
 const (
-    assetsRoot = "./assets"
+//assetsRoot = "./assets"
 )
 
+type Arg struct {
+    cli.Helper
+    Root string `cli:"root" usage:"assets root" dft:"./assets"`
+}
+
 func main() {
-    os.MkdirAll(assetsRoot, os.ModePerm)
 
-    router := gin.Default()
-    router.GET("/list", fileList)
-    router.Static("/assets", assetsRoot)
+    os.Exit(cli.Run(new(Arg), func(ctx *cli.Context) error {
+        argv := ctx.Argv().(*Arg)
+        if e := os.MkdirAll(argv.Root, os.ModePerm); e != nil {
+            return e
+        }
+        fmt.Println("mk dir: ", argv.Root)
 
-    hostName, err := cfg.GetLocalAddr()
-    if err != nil {
-        panic(err)
-    }
+        router := gin.Default()
+        router.GET("/list", fileList(argv.Root))
+        router.Static("/assets", argv.Root)
 
-    router.Run(fmt.Sprintf("%s:8888", hostName.String()))
+        hostName, err := cfg.GetLocalAddr()
+        if err != nil {
+            panic(err)
+        }
+
+        return router.Run(fmt.Sprintf("%s:8888", hostName.String()))
+    }))
+
     //config := cfg.NewConfigFrom("config.json")
     //srvShare := apis.NewSrvShare(config)
     //
@@ -55,46 +69,10 @@ func main() {
     //log.Fatal(server.ListenAndServe())
 }
 
-type FileInfo struct {
-    FullPath string `json:"full_path"`
-    MD5      string `json:"md5"`
-}
-
-func fileList(c *gin.Context) {
-    //var list []FileInfo
-    //filepath.Walk(assetsRoot, func(p string, info os.FileInfo, err error) error {
-    //    if p == assetsRoot {
-    //        return nil
-    //    }
-    //    if info.IsDir() {
-    //        return nil
-    //    }
-    //    name := info.Name()
-    //    if strings.HasPrefix(name, ".") {
-    //        return nil
-    //    }
-    //
-    //    var md5Check string
-    //    {
-    //        bs, err := ioutil.ReadFile(p)
-    //        if err != nil {
-    //            fmt.Println("----read file failed: ", p, " error: ", err)
-    //        } else {
-    //            md5Check = fmt.Sprintf("%x", md5.Sum(bs))
-    //        }
-    //    }
-    //
-    //    fi := FileInfo{
-    //        FullPath: p,
-    //        MD5:      md5Check,
-    //    }
-    //    list = append(list, fi)
-    //    fmt.Println("name: ", name)
-    //    fmt.Println("full path: ", p)
-    //
-    //    return nil
-    //})
-    list := file_tools.GetFileList(assetsRoot)
-    c.JSON(200, list)
-
+func fileList(assetsRoot string) gin.HandlerFunc {
+    f := func(c *gin.Context) {
+        list := file_tools.GetFileList(assetsRoot)
+        c.JSON(200, list)
+    }
+    return f
 }
