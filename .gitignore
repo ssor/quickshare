@@ -6,3 +6,6 @@
 **/dist
 **/vendor
 **/yarn-error
+assets/
+.idea/
+.DS_Store
